@@ -8,6 +8,7 @@
   - https://github.com/the-purple-team/bradyService
   - https://github.com/the-purple-team/Jose-Questions-And-Answers-Service
   - https://github.com/teamName/repo
+  TODO
 
 ## Table of Contents
 
@@ -22,7 +23,14 @@
 
 ## Usage
 
-> Some usage instructions
+-- Copy temp_setup.js to setup.js
+-- Update environment information in setup.js file
+
+```console
+npm install
+npm run react-prod
+
+```
 
 ## Requirements
 
