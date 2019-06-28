@@ -23,14 +23,7 @@
 
 ## Usage
 
--- Copy temp_setup.js to setup.js
--- Update environment information in setup.js file
 
-```console
-npm install
-npm run react-prod
-
-```
 
 ## Requirements
 
@@ -43,19 +36,53 @@ An `nvmrc` file is included if using [nvm](https://github.com/creationix/nvm).
 
 ### Installing Dependencies
 
-From within the root directory:
+#### MYSQL
 
+*Install*
 ```sh
 brew install mysql@5.7
+```
 
-npm install -g webpack
+*Connect*
+```
+mysql -u root -p
+```
+
+
+### Local
+*setup.js*
+- Copy temp_setup.js to setup.js
+- Update environment information in setup.js file
+
+*Database*
+- Make sure your mysql server is running locally
+
+- create database
+```
+mysql -u root -p
+source ./database-mysql/schema.sql
+```
+
+- seed database
+  - from command prompt (not sql)
+```console
+node ./database-mysql/seeds/loadFakeData.js
+```
+
+
+*Steps*
+Install dependencies
+```console
 npm install
 ```
 
-connect mysql --> mysql -u root -p
+Compile react app for Production
+```
+npm run react-prod
+```
 
-<!-- /usr/local/opt/mysql@5.7/bin/mysql.server start
 
-??
-export LDFLAGS="-L/usr/local/opt/mysql@5.7/lib"
-  export CPPFLAGS="-I/usr/local/opt/mysql@5.7/include" -->
+
+
+### AWS
+
