@@ -1,4 +1,5 @@
 import React from 'react';
+import consts from '../../../env/setup.js';
 
 import {
   Wrapper,
@@ -50,9 +51,10 @@ class Pricing extends React.Component {
   handleLoad() {
     var queryProductId = window.location.pathname.slice(10);
     queryProductId = queryProductId.replace("/", "");
+    //queryProductId = queryProductId.replace(":", "");
     console.log('queryProductId ' + queryProductId);
     $.ajax({
-      url: 'http://localhost:3030/product/:' + queryProductId,
+      url: consts.server_host + 'product/:' + queryProductId,
       type: 'GET',
       success: (serverData) => {
         console.log('serverData ' + typeof serverData + ', ' + serverData);

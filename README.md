@@ -132,6 +132,11 @@ npm run start
 ### PM2 Module
 - to keep the server running
 
+```
+sudo npm i -g pm2
+```
+
+
 
 
 
