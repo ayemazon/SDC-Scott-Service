@@ -39,5 +39,5 @@ app.get('/product/:id', (req, res) => {
 
 
 app.listen(PORT, () => {
-  console.log(`listening on port ${PORT}`);
+  console.log(`visit http://localhost:${PORT}`);
 });
