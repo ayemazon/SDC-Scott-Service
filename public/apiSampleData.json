@@ -1,0 +1,13 @@
+{
+    "id": "1",
+    "vendor_id": 8,
+    "sold_by": "Blaze Kris",
+    "fulfilled_by": "Blaze Kris",
+    "price": 28,
+    "amz_holds_stock": false,
+    "available_quantity": 431,
+    "gift_wrap_available": true,
+    "user_zip": "78726",
+    "expected_shipping": "Two Days",
+    "free_delivery": true
+}
