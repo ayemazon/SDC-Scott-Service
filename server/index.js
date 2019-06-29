@@ -8,19 +8,16 @@ const app = express();
 const PORT = 3030;
 
 app.use(cors());
-//   ,
-//   bodyParser.urlencoded({ extended: true }),
-//   bodyParser.json()
-// )
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 const clientDistFolder = path.join(__dirname, '/..', '/client/dist');
 const publicFolder = path.join(__dirname, '/..', '/public');
 
-//console.log('clientDistFolder = ' + clientDistFolder + ', publicFolder = ' + publicFolder);
-//app.use(express.static(clientDistFolder));
+console.log('clientDistFolder = ' + clientDistFolder + ', publicFolder = ' + publicFolder);
 
+app.use(express.static(clientDistFolder));
 app.use('/static', express.static(publicFolder));
-
 app.use('/products/:id', express.static(clientDistFolder));
 
 app.get('/product/:id', (req, res) => {
@@ -37,7 +34,6 @@ app.get('/product/:id', (req, res) => {
     }
   });
 });
-
 
 app.listen(PORT, () => {
   console.log(`visit http://localhost:${PORT} OR http://3.218.88.90:${PORT}`);

@@ -33,7 +33,7 @@ const insertIntoTable = function (tableName, data, cb) {
     dataValues += data[prop] + '"';
   }
   var queryString = 'INSERT INTO ' + tableName + ' (' + dataKeys + ') VALUES (' + dataValues + '); ';
-  console.log('' + queryString + ';');
+  //console.log('' + queryString + ';');
   connection.query(queryString, (err, dbRes) => {
     if (err) {
       //console.log('mysql insertIntoTable error ' + err);
@@ -61,10 +61,10 @@ const getProductDataById = function (id, cb) {
     'tAvail.quantity_available, tAvail.price ' +
     ' FROM item as tItem INNER JOIN item_availability as tAvail ' +
     ' WHERE tItem.id = ' + id + ' AND tItem.id = tAvail.item_id';
-  console.log('' + queryString + ';');
+  //console.log('' + queryString + ';');
   connection.query(queryString, (err, dbRes) => {
     if (err) {
-      //console.log('mysql insertIntoTable error ' + err);
+      console.log('mysql insertIntoTable error ' + err);
       cb(err, null);
     } else {
       if (!dbRes) {
