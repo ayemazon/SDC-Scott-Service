@@ -8,7 +8,9 @@ const app = express();
 const PORT = 3030;
 
 app.use(cors());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 app.use(bodyParser.json());
 
 const clientDistFolder = path.join(__dirname, '/..', '/client/dist');
@@ -18,12 +20,12 @@ console.log('clientDistFolder = ' + clientDistFolder + ', publicFolder = ' + pub
 
 app.use(express.static(clientDistFolder));
 app.use('/static', express.static(publicFolder));
-app.use('/products/:id', express.static(clientDistFolder));
+app.use('/:id', express.static(clientDistFolder));
 
 app.get('/product/:id', (req, res) => {
   console.log('%s %s %s', req.method, req.url, req.path)
   console.log(req.params.id);
-  var requestedId = (req.params.id).replace(":", "");
+  var requestedId = req.params.id;
 
   db.getProductDataById(requestedId, (err, results) => {
     if (err) {
@@ -36,5 +38,5 @@ app.get('/product/:id', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`visit http://localhost:${PORT} OR http://3.218.88.90:${PORT}`);
+  console.log(`visit http://localhost:${PORT}`);
 });

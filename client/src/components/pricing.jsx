@@ -50,12 +50,11 @@ class Pricing extends React.Component {
   }
 
   handleLoad() {
-    var queryProductId = window.location.pathname.slice(10);
-    queryProductId = queryProductId.replace("/", "");
-    //queryProductId = queryProductId.replace(":", "");
+    var queryProductId = window.location.pathname;
+    
     console.log('queryProductId ' + queryProductId);
     $.ajax({
-      url: consts.server_host + 'product/:' + queryProductId,
+      url: consts.server_host + 'product' + queryProductId,
       type: 'GET',
       success: (serverData) => {
         console.log('serverData ' + typeof serverData + ', ' + serverData);
