@@ -9,14 +9,6 @@ connection.connect((err) => {
   }
 });
 
-// user(
-//   id INT NOT NULL AUTO_INCREMENT,
-//   name VARCHAR(255) NOT NULL,
-//   email VARCHAR(255) NOT NULL,
-//   default_address_zip INT(5),
-//   PRIMARY KEY(id)
-// );
-
 
 const insertIntoTable = function (tableName, data, cb) {
   var dataKeys = '';
@@ -44,27 +36,19 @@ const insertIntoTable = function (tableName, data, cb) {
   });
 };
 
-// res.status(200).send(JSON.stringify({
-//   expected_shipping: "one-day",
-//   sold_by: "sold by vendorName",
-
-//   gift_wrap_available: true,
-//   user_zip: "78726"
-// }));
-
 
 const getProductDataById = function (id, cb) {
   var dataObj = {};
   dataObj.id = id;
 
-  var queryString = 'SELECT tAvail.item_id, tAvail.vendor_id, tAvail.amz_holds_stock, ' +
-    'tAvail.quantity_available, tAvail.price ' +
-    ' FROM item as tItem INNER JOIN item_availability as tAvail ' +
-    ' WHERE tItem.id = ' + id + ' AND tItem.id = tAvail.item_id';
+  var queryString = 'SELECT item_id, vendor_id, amz_holds_stock, ' +
+    'quantity_available, price ' +
+    ' FROM item_availability ' +
+    ' WHERE ' + id + ' = item_id';
   //console.log('' + queryString + ';');
   connection.query(queryString, (err, dbRes) => {
     if (err) {
-      console.log('mysql insertIntoTable error ' + err);
+      console.log('MYSQL select by item_id error ' + err);
       cb(err, null);
     } else {
       if (!dbRes) {
