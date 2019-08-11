@@ -50,11 +50,11 @@ class Pricing extends React.Component {
   }
 
   handleLoad() {
-    var queryProductId = window.location.pathname;
+    var queryProductId = window.location.pathname.slice(1);
     
     console.log('queryProductId ' + queryProductId);
-    $.ajax({
-      url: consts.server_host + 'product' + queryProductId,
+    if (queryProductId !== '') {$.ajax({
+      url: consts.server_host + 'product/' + queryProductId,
       type: 'GET',
       success: (serverData) => {
         console.log('serverData ' + typeof serverData + ', ' + serverData);
@@ -65,17 +65,17 @@ class Pricing extends React.Component {
         return {};
       },
     }).then((dataReturned) => {
-      var dataParsed = JSON.parse(dataReturned);
-      var recId = dataParsed.id || queryProductId;
+      dataReturned = JSON.parse(dataReturned)
+      var recId = dataReturned.id || queryProductId;
       this.setState({
-        productDetails: dataParsed,
+        productDetails: dataReturned,
         productId: recId,
       });
       this.setState({
         changed: this.state.changed ? false : true,
       });
     });
-  }
+  }}
 
   render() {
     return (
