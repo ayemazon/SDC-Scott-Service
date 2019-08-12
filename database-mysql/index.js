@@ -11,24 +11,10 @@ connection.connect((err) => {
 
 
 const insertIntoTable = function (tableName, data, cb) {
-  var dataKeys = '';
-  var dataValues = '';
-  for (var prop in data) {
-    if (dataKeys !== '') {
-      dataKeys += ', ';
-      dataValues += ', "';
-    }
-    if (dataValues === '') {
-      dataValues += '"';
-    }
-    dataKeys += prop;
-    dataValues += data[prop] + '"';
-  }
-  var queryString = 'INSERT INTO ' + tableName + ' (' + dataKeys + ') VALUES (' + dataValues + '); ';
-  //console.log('' + queryString + ';');
-  connection.query(queryString, (err, dbRes) => {
+  var queryString = `INSERT INTO ${tableName} SET ?`;
+  console.log(queryString);
+  connection.query(queryString, [data], (err, dbRes) => {
     if (err) {
-      //console.log('mysql insertIntoTable error ' + err);
       cb(err, null);
     } else {
       cb(null, dbRes);
@@ -54,11 +40,12 @@ const getProductDataById = function (id, cb) {
       if (!dbRes) {
         cb(null, {});
       } else {
+        dbRes = dbRes[0];
         //console.log("dbRes 1 = " + JSON.stringify(dbRes));
-        dataObj.vendor_id = dbRes[0].vendor_id;
-        dataObj.price = dbRes[0].price;
-        dataObj.amz_holds_stock = ((dbRes[0].amz_holds_stock == 0) ? false : true);
-        dataObj.available_quantity = dbRes[0].quantity_available;
+        dataObj.vendor_id = dbRes.vendor_id;
+        dataObj.price = dbRes.price;
+        dataObj.amz_holds_stock = ((dbRes.amz_holds_stock == 0) ? false : true);
+        dataObj.available_quantity = dbRes.quantity_available;
         dataObj.gift_wrap_available = true;
         dataObj.user_zip = "78726";
 
