@@ -53,7 +53,8 @@ class Pricing extends React.Component {
     var queryProductId = window.location.pathname.slice(1);
     
     console.log('queryProductId ' + queryProductId);
-    if (queryProductId !== '') {$.ajax({
+    if (queryProductId !== '') {
+      $.ajax({
       url: consts.server_host + 'product/' + queryProductId,
       type: 'GET',
       success: (serverData) => {
@@ -101,7 +102,7 @@ class Pricing extends React.Component {
           </DeliveryText>
 
           <AvailabilityStatement
-            availQuantity={this.state.productDetails.available_quantity}
+            availQuantity={this.state.productDetails.quantity_available}
           />
 
           <SoldFulfilledText>
