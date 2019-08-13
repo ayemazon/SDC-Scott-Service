@@ -25,65 +25,43 @@ const insertIntoTable = function (tableName, data, cb) {
 //----------------------------//
 
 const getProductDataById = function (id, cb) {
-  var dataObj = {};
-  dataObj.id = id;
+  // var dbRes = {};
+  // dbRes.id = id;
 
-  var queryString = 'SELECT item_id, vendor_id, amz_holds_stock, ' +
-    'quantity_available, price ' +
-    ' FROM item_availability ' +
-    ' WHERE ' + id + ' = item_id';
-  //console.log('' + queryString + ';');
+  var queryString = `SELECT itemAvail.item_id, itemAvail.vendor_id, itemAvail.amz_holds_stock, itemAvail.quantity_available, itemAvail.price, 
+  vendor.id, vendor.name, vendor.free_returns, vendor.ships_on_saturday, vendor.ships_on_sunday, vendor.ships_from_zipcode
+  FROM item_availability AS itemAvail 
+  INNER JOIN vendor
+  WHERE vendor.id = ${id} AND itemAvail.vendor_id = ${id}`;
+
   connection.query(queryString, (err, dbRes) => {
     if (err) {
       console.log('MYSQL select by item_id error ' + err);
       cb(err, null);
     } else {
-      if (!dbRes) {
-        cb(null, {});
-      } else {
-        dbRes = dbRes[0];
-        //console.log("dbRes 1 = " + JSON.stringify(dbRes));
-        dataObj.vendor_id = dbRes.vendor_id;
-        dataObj.price = dbRes.price;
-        dataObj.amz_holds_stock = ((dbRes.amz_holds_stock == 0) ? false : true);
-        dataObj.available_quantity = dbRes.quantity_available;
-        dataObj.gift_wrap_available = true;
-        dataObj.user_zip = "78726";
+      dbRes = dbRes[0];
+      dbRes.gift_wrap_available = true;
+      dbRes.user_zip = "78726";
 
-        queryString = 'SELECT tVendor.id, tVendor.name, tVendor.free_returns, tVendor.ships_on_saturday, ' +
-          ' tVendor.ships_on_sunday, tVendor.ships_from_zipcode ' +
-          ' FROM vendor as tVendor ' +
-          ' WHERE tVendor.id = ' + dataObj.vendor_id;
 
-        connection.query(queryString, (err, dbRes2) => {
-          if (err) {
-            console.log('mysql insertIntoTable error ' + err);
-            cb(err, null);
-          } else {
-            if (!dbRes2) {
-              cb(null, dataObj);
-            } else {
-              dataObj.sold_by = dbRes2[0].name;
-              dataObj.fulfilled_by = ((dataObj.amz_holds_stock == true) ? "Amazon" : dbRes2[0].name);
-              if (dbRes2[0].ships_on_sunday == 1 && dbRes2[0].ships_on_saturday == 1) {
-                dataObj.expected_shipping = "One Day";
-              }
-              if (dbRes2[0].ships_on_sunday == 1 || dbRes2[0].ships_on_saturday == 1) {
-                dataObj.expected_shipping = "Two Days";
-              }
-              if (dbRes2[0].ships_on_sunday != 1 && dbRes2[0].ships_on_saturday != 1) {
-                dataObj.expected_shipping = "4-5 Days";
-              }
-              dataObj.free_delivery = ((dbRes2[0].free_returns == 1) ? true : false);
-
-              //console.log("dataObj = " + JSON.stringify(dataObj));
-
-              cb(null, dataObj);
-            }
-          }
-        });
+      dbRes.sold_by = dbRes.name;
+      dbRes.fulfilled_by = ((dbRes.amz_holds_stock == true) ? "Amazon" : dbRes.name);
+      if (dbRes.ships_on_sunday == 1 && dbRes.ships_on_saturday == 1) {
+        dbRes.expected_shipping = "One Day";
       }
+      if (dbRes.ships_on_sunday == 1 || dbRes.ships_on_saturday == 1) {
+        dbRes.expected_shipping = "Two Days";
+      }
+      if (dbRes.ships_on_sunday != 1 && dbRes.ships_on_saturday != 1) {
+        dbRes.expected_shipping = "4-5 Days";
+      }
+      dbRes.free_delivery = ((dbRes.free_returns == 1) ? true : false);
+
+      cb(null, dbRes);
     }
+
+
+
   });
 };
 
