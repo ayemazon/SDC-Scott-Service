@@ -9,7 +9,7 @@ connection.connect((err) => {
   }
 });
 
-
+//------------ CRUD ----------//
 const insertIntoTable = function (tableName, data, cb) {
   var queryString = `INSERT INTO ${tableName} SET ?`;
   console.log(queryString);
@@ -22,6 +22,7 @@ const insertIntoTable = function (tableName, data, cb) {
   });
 };
 
+//----------------------------//
 
 const getProductDataById = function (id, cb) {
   var dataObj = {};
