@@ -53,15 +53,15 @@ npm run server
 
 **`POST`** path **`/`**
 - Creates record in database table of choice
-- Provide a table name and data to insert e.g. `{ table: 'your_table_name', data: { col_1: 'someValue' } }`
+- Provide request body with a table name and data to insert e.g. `{ table: 'your_table_name', data: { col_1: 'someValue' } }`
 
 **`PUT`** path **`/`**
 - Updates record in database table of choice
-- Provide a table name, data to update, and id e.g. `{ table: 'your_table_name', data: { col_1: 'someValue' }, id: 45 }`
+- Provide request body with a table name, data to update, and id e.g. `{ table: 'your_table_name', data: { col_1: 'someValue' }, id: 45 }`
 
 **`DELETE`** path **`/`**
 - Deletes record in database table of choice
-- Provide a table name and id e.g. `{ table: 'your_table_name', id: 86 }`
+- Provide request body with a table name and id e.g. `{ table: 'your_table_name', id: 86 }`
 ```
 
 
