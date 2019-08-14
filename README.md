@@ -46,7 +46,23 @@ npm run react-prod
 npm run server
 ```
 
-##API Usage
+## API Use
+
+**`GET`** path **`/product/:id`**
+- Fetches product info for the given id, including product availability
+
+**`POST`** path **`/`**
+- Creates record in database table of choice
+- Provide a table name and data to insert e.g. `{ table: 'your_table_name', data: { col_1: 'someValue' } }`
+
+**`PUT`** path **`/`**
+- Updates record in database table of choice
+- Provide a table name, data to update, and id e.g. `{ table: 'your_table_name', data: { col_1: 'someValue' }, id: 45 }`
+
+**`DELETE`** path **`/`**
+- Deletes record in database table of choice
+- Provide a table name and id e.g. `{ table: 'your_table_name', id: 86 }`
+```
 
 
 
