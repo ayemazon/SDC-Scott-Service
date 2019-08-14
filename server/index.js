@@ -23,16 +23,54 @@ app.use('/static', express.static(publicFolder));
 app.use('/:id', express.static(clientDistFolder));
 
 app.get('/product/:id', (req, res) => {
-  console.log('%s %s %s', req.method, req.url, req.path)
-  console.log(req.params.id);
   var requestedId = req.params.id;
 
   db.getProductDataById(requestedId, (err, results) => {
     if (err) {
-      console.log(' server issue get selectId ');
+      console.log('GET error');
       res.status(400).send(err);
     } else {
-      res.status(200).send(JSON.stringify(results));
+      res.status(200).json(results);
+    }
+  });
+});
+
+app.post('/', (req, res) => {
+  let table = req.body.table;
+  let data = req.body.data;
+  db.createRecord(table, data, (err, results) => {
+    if (err) {
+      console.log('POST error');
+      res.status(400).send(err);
+    } else {
+      res.status(200).json(results)
+    }
+  });
+});
+
+app.put('/', (req, res) => {
+  let id = req.body.id;
+  let table = req.body.table;
+  let data = req.body.data;
+  db.updateRecord(table, data, id, (err, results) => {
+    if (err) {
+      console.log('PUT error');
+      res.status(400).send(err);
+    } else {
+      res.status(200).json(results)
+    }
+  });
+});
+
+app.delete('/', (req, res) => {
+  let id = req.body.id;
+  let table = req.body.table;
+  db.deleteRecord(table, id, (err, results) => {
+    if (err) {
+      console.log('PUT error');
+      res.status(400).send(err);
+    } else {
+      res.status(200).json(results)
     }
   });
 });
