@@ -66,7 +66,6 @@ class Pricing extends React.Component {
         return {};
       },
     }).then((dataReturned) => {
-      dataReturned = JSON.parse(dataReturned)
       var recId = dataReturned.id || queryProductId;
       this.setState({
         productDetails: dataReturned,

@@ -50,7 +50,7 @@ const getProductDataById = function (id, cb) {
 
   var queryString = `SELECT itemAvail.item_id, itemAvail.vendor_id, itemAvail.amz_holds_stock, itemAvail.quantity_available, itemAvail.price, 
   vendor.id, vendor.name, vendor.free_returns, vendor.ships_on_saturday, vendor.ships_on_sunday, vendor.ships_from_zipcode
-  FROM item_availability AS itemAvail 
+  FROM items_vendors AS itemAvail 
   INNER JOIN vendor
   WHERE itemAvail.item_id = ${id} AND vendor.id = itemAvail.vendor_id`;
 
