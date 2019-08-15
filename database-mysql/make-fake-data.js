@@ -9,7 +9,9 @@ const itemCondition = ['New', 'Used - Like New', 'Used - Very Good', 'Used - Goo
 
 /* Functions that create fake data for database tables */
 let createItems = function (qty) {
-  let writeStream = fs.createWriteStream(__dirname + '/fake-data/items.txt');
+  let writeStream = fs.createWriteStream(__dirname + '/fake-data/items.txt', {
+    'flags': 'a'
+  });
   for (let i = 0; i < qty; i++) {
     writeStream.write(`${faker.commerce.productAdjective()} ${faker.commerce.color()} ${faker.commerce.productName()}\n`);
   }
@@ -29,7 +31,7 @@ let createAvailableItems = function (qty) {
     'flags': 'a' // Allows for two 5Million record batches to be appended to same file
   });
   for (let i = 0; i < qty; i++) {
-    writeStream.write(`${randomNumber(200000, 1)}\t${randomNumber(100000, 1)}\t${itemCondition[randomNumber(4)]}\t${faker.commerce.price()}\t${randomNumber(1000)}\t${randomNumber(1)}\t${randomNumber(1)}\t${faker.address.zipCode()}\n`);
+    writeStream.write(`${randomNumber(10000000, 1)}\t${randomNumber(50000, 1)}\t${itemCondition[randomNumber(4)]}\t${faker.commerce.price()}\t${randomNumber(1000)}\t${randomNumber(1)}\t${randomNumber(1)}\t${faker.address.zipCode()}\n`);
   }
   writeStream.end();
 }
@@ -38,8 +40,8 @@ let createAvailableItems = function (qty) {
 
 /* Generate fake data and store in a text file for loading */
 
-// TODO - Depending on your computer's memory, you may have to run the following separately. 5M records will need to be run twice, or you will need modify the quantity
+// TODO - Depending on your computer's memory, you may have to run the following separately. 5M records will need to be run x6 for 30M, or you will need modify the quantity
 
-// createItems(200000);
-// createVendors(100000);
-createAvailableItems(5000000); // Run twice or modify
+// createItems(5000000);
+// createVendors(50000);
+createAvailableItems(5000000); // Run x6 or modify
