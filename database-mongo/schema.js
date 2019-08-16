@@ -2,11 +2,13 @@ const db = require('./index.js');
 const fs = require('fs');
 const csv = require('fast-csv');
 const mongoose = require('mongoose');
+const AutoIncrement = require('mongoose-auto-increment-reworked');
 const Schema = mongoose.Schema;
 
 db.connection.on('open', function () {
   console.log('Database connection open');
 })
+
 // TODO - build out db collections and insert test docs
 // use fast-csv for streaming fakeData to be inserted into mongo
 // use simple test cases
@@ -16,9 +18,13 @@ db.connection.on('open', function () {
 
 
 var itemsSchema = new Schema({
-  _id: Number,
   name: String
 });
+
+itemsSchema.plugin(AutoIncrement.MongooseAutoIncrementID.plugin, {
+  modelName: 'Items'
+});
+
 
 var vendorsSchema = new Schema({
   _id: Number,
@@ -46,25 +52,23 @@ var Vendor = mongoose.model('Vendors', vendorsSchema);
 var Items_vendor = mongoose.model('Items_Vendors', items_vendorsSchema);
 
 
-fs.createReadStream('database-mysql/fake-data/mongo_test.txt', {
-    emitClose: true
-  })
-  .pipe(csv.parse({
-    headers: true,
-    delimiter: '\t'
-  }))
-  .on('data', row => console.log(row))
-  .on('end', () => db.connection.close());
+// fs.createReadStream('database-mysql/fake-data/mongo_test.txt', {
+//     emitClose: true
+//   })
+//   .pipe(csv.parse({
+//     headers: true,
+//     delimiter: '\t'
+//   }))
+//   .on('data', row => console.log(row))
+//   .on('end', () => db.connection.close());
 
-// Item.insertMany([{
-//   _id: 1,
-//   name: 'test_item1'
-// }, {
-//   _id: 2,
-//   name: 'test_item2'
-// }], function (err) {
-//   if (err) console.log('***Error in saving Item document to db!*** ', err);
-// })
+Item.create([{
+  name: 'test_item1'
+}, {
+  name: 'test_item2'
+}], function (err) {
+  if (err) console.log('***Error in saving Item document to db!*** ', err);
+})
 
 // Vendor.insertMany([{
 //   _id: 1,

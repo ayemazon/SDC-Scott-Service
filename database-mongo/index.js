@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/amazon', {
-  useNewUrlParser: true
+  useNewUrlParser: true,
+  useCreateIndex: true,
+  useFindAndModify: false
 });
 
 var db = mongoose.connection;
