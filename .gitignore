@@ -27,5 +27,6 @@ env/ham-keys.pem
 
 # Fake data files
 database-mysql/fake-data
+database-mongo/fake-data
 
 

@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require("path");
 const cors = require("cors");
-const db = require('../database-mysql');
+const db = require('../database-mongo/index.js');
 
 const app = express();
 const PORT = 3030;
