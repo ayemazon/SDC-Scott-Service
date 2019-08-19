@@ -1,7 +1,13 @@
 /*
-++++ This config option is needed to increase the heap size for large data loads--> node --max-old-space-size=4096 yourFile.js
+++++ This config option is needed to increase the heap size for large data loads--> node --max-old-space-size=6114 yourFile.js
 
+++++ import(seed) scripts ++++
 mongoimport --db amazon --collection items --columnsHaveTypes --type tsv --fields "_id.int32(),name.string()" --file 'database-mongo/fake-data/items.txt'
+
+mongoimport --db amazon --collection vendors --columnsHaveTypes --type tsv --fields "_id.int32(),name.string(),amz_holds_stock.boolean(),free_returns.boolean(),ships_on_saturday.boolean(),ships_on_sunday.boolean(),ships_from_zipcode.string(),status.string()" --file 'database-mongo/fake-data/vendors.txt'
+
+mongoimport --db amazon --collection items_vendors --columnsHaveTypes --type tsv --fields "item_id.int32(),vendor_id.int32(),items_condition.string(),price.decimal(),quantity_available.int32(),amz_holds_stock.boolean(),free_returns.boolean(),ships_from_zipcode.string()" --file 'database-mongo/fake-data/items_vendors.txt'
+
 */
 const faker = require('faker');
 const fs = require('fs');
@@ -31,13 +37,18 @@ let createVendors = function (qty) {
   writeStream.end();
 }
 
-let createAvailableItems = function (qty) {
+let createAvailableItems = function () {
   let writeStream = fs.createWriteStream(__dirname + '/fake-data/items_vendors.txt', {
     'flags': 'a' // Allows for two 5Million record batches to be appended to same file
   });
-  for (let i = 0; i < qty; i++) {
-    writeStream.write(`${i+1}\t${randomNumber(10000000, 1)}\t${randomNumber(50000, 1)}\t${itemCondition[randomNumber(4)]}\t${faker.commerce.price()}\t${randomNumber(1000)}\t${randomNumber(1)}\t${randomNumber(1)}\t${faker.address.zipCode()}\n`);
+
+  // NOTE * You will need to uncomment one loop at a time and set the number of loops according to the number of records you want to generate.
+  // If you try to run too many at once, you may run out of memory!
+
+  for (let i = 0; i < 15000000; i++) {
+    writeStream.write(`${randomNumber(10000000, 1)}\t${randomNumber(50000, 1)}\t${itemCondition[randomNumber(4)]}\t${faker.commerce.price()}\t${randomNumber(1000)}\t${randomNumber(1)}\t${randomNumber(1)}\t${faker.address.zipCode()}\n`);
   }
+
   writeStream.end();
 }
 
@@ -47,6 +58,6 @@ let createAvailableItems = function (qty) {
 
 // TODO - Depending on your computer's memory, you may have to run the following separately. 5M records will need to be run x6 for 30M, or you will need modify the quantity
 
-createItems(10000000);
+//createItems(10000000);
 // createVendors(50000);
-// createAvailableItems(5000000); // Run x6 or modify
+createAvailableItems();

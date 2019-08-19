@@ -33,8 +33,14 @@ var VendorsSchema = new Schema({
 });
 
 var Items_VendorsSchema = new Schema({
-  item_id: Number,
-  vendor_id: Number,
+  item_id: {
+    Type: Number,
+    ref: 'Items'
+  },
+  vendor_id: {
+    Type: Number,
+    ref: 'Vendors'
+  },
   items_condition: String,
   price: Number,
   quantity_available: Number,
