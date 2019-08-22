@@ -55,15 +55,13 @@ npm run server
 - Creates record in database table of choice
 - Provide request body with a table name and data to insert e.g. `{ table: 'your_table_name', data: { col_1: 'someValue' } }`
 
-**`PUT`** path **`/`**
-- Updates record in database table of choice
-- Provide request body with a table name, data to update, and id e.g. `{ table: 'your_table_name', data: { col_1: 'someValue' }, id: 45 }`
+## MongoDB data generation scripts
 
-**`DELETE`** path **`/`**
-- Deletes record in database table of choice
-- Provide request body with a table name and id e.g. `{ table: 'your_table_name', id: 86 }`
-```
+Use file **`database-mongo/make-fake-data.js`**
+- Notes contained therein for data generation and seeding
 
+**After database is seeded:**
+- You will need to add an index to the **`item_id field`** of **`items_vendors`** collection. From the mongo shell, this looks like **`db.collection.createIndex(keys, options)`** as per mongo's documentation. Since this field is used for the service's main query, running queries without an index on the **`item_id`** field will result in very slow document retrieval.
 
 
 
