@@ -52,8 +52,8 @@ npm run server
 - Fetches product info for the given id, including product availability
 
 **`POST`** path **`/`**
-- Creates record in database table of choice
-- Provide request body with a table name and data to insert e.g. `{ table: 'your_table_name', data: { col_1: 'someValue' } }`
+- Creates record in database collection "items" ONLY
+- Provide request body with the collection name and product/item name e.g. `{"collection":"items","data":{"name":"Brand-new newness"}}`
 
 ## MongoDB data generation scripts
 
