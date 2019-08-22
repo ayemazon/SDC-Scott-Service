@@ -4,7 +4,7 @@ const url = 'mongodb://localhost:27017';
 const dbName = 'amazon';
 const client = new MongoClient(url);
 
-//* For execution statistics, -->   db.items.find({item_id: 7909997}).sort({price: 1}).limit(1).explain('executionStats')  &  db.vendors.find(_id : 45001).explain('executionStats')
+//* For execution statistics, -->   db.items_vendors.find({item_id: 7909997}).sort({price: 1}).limit(1).explain('executionStats')  &  db.vendors.find(_id : 45001).explain('executionStats')
 
 
 const getProductDataById = function (id, cb) {
