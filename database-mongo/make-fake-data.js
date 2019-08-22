@@ -1,14 +1,15 @@
 /*
-++++ This config option is needed to increase the heap size for large data loads--> node --max-old-space-size=6114 yourFile.js
+! This config option is needed to increase the heap size for large data loads--> node --max-old-space-size=6114 yourFile.js
 
 ++++ import(seed) scripts ++++
-mongoimport --db amazon --collection items --columnsHaveTypes --type tsv --fields "_id.int32(),name.string()" --file 'database-mongo/fake-data/items.txt'
+* mongoimport --db amazon --collection items --columnsHaveTypes --type tsv --fields "_id.int32(),name.string()" --file 'database-mongo/fake-data/items.txt'
 
-mongoimport --db amazon --collection vendors --columnsHaveTypes --type tsv --fields "_id.int32(),name.string(),amz_holds_stock.boolean(),free_returns.boolean(),ships_on_saturday.boolean(),ships_on_sunday.boolean(),ships_from_zipcode.string(),status.string()" --file 'database-mongo/fake-data/vendors.txt'
+* mongoimport --db amazon --collection vendors --columnsHaveTypes --type tsv --fields "_id.int32(),name.string(),amz_holds_stock.boolean(),free_returns.boolean(),ships_on_saturday.boolean(),ships_on_sunday.boolean(),ships_from_zipcode.string(),status.string()" --file 'database-mongo/fake-data/vendors.txt'
 
-mongoimport --db amazon --collection items_vendors --columnsHaveTypes --type tsv --fields "item_id.int32(),vendor_id.int32(),items_condition.string(),price.string(),quantity_available.int32(),amz_holds_stock.boolean(),free_returns.boolean(),ships_from_zipcode.string()" --file 'database-mongo/fake-data/items_vendors.txt'
+* mongoimport --db amazon --collection items_vendors --columnsHaveTypes --type tsv --fields "item_id.int32(),vendor_id.int32(),items_condition.string(),price.string(),quantity_available.int32(),amz_holds_stock.boolean(),free_returns.boolean(),ships_from_zipcode.string()" --file 'database-mongo/fake-data/items_vendors.txt'
 
 */
+
 const faker = require('faker');
 const fs = require('fs');
 
@@ -56,7 +57,7 @@ let createAvailableItems = function () {
 
 /* Generate fake data and store in a text file for loading */
 
-// TODO - Depending on your computer's memory, you may have to run the following separately. 5M records will need to be run x6 for 30M, or you will need modify the quantity
+// TODO - Depending on your computer's memory, you may have to run the following in separate batches. 5M records will need to be run x6 for 30M, or you will need modify the quantity
 
 //createItems(10000000);
 // createVendors(50000);

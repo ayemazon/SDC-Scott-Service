@@ -48,33 +48,6 @@ app.post('/', (req, res) => {
   });
 });
 
-// app.put('/', (req, res) => {
-//   let id = req.body.id;
-//   let table = req.body.table;
-//   let data = req.body.data;
-//   db.updateRecord(table, data, id, (err, results) => {
-//     if (err) {
-//       console.log('PUT error');
-//       res.status(400).send(err);
-//     } else {
-//       res.status(200).json(results)
-//     }
-//   });
-// });
-
-// app.delete('/', (req, res) => {
-//   let id = req.body.id;
-//   let table = req.body.table;
-//   db.deleteRecord(table, id, (err, results) => {
-//     if (err) {
-//       console.log('PUT error');
-//       res.status(400).send(err);
-//     } else {
-//       res.status(200).json(results)
-//     }
-//   });
-// });
-
 app.listen(PORT, () => {
   console.log(`visit http://localhost:${PORT}`);
 });
