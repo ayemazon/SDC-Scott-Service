@@ -2,7 +2,7 @@
 ## Table of Contents
 
 1. [Environment Setup Local](#Environment)
-1. [AWS Setup](#AWS)
+2. [API Usage](#API)
 
 ## Environment Setup Local
 
@@ -46,96 +46,22 @@ npm run react-prod
 npm run server
 ```
 
-## AWS - High level Account Setup
+## API Use
 
-### IAM Module
+**`GET`** path **`/product/:id`**
+- Fetches product info for the given id, including product availability
 
-#### Enable Multi-Factor Authentication
-- Created Policy
-- Added new User
-- Created Group
-- Assigned User to Group
+**`POST`** path **`/`**
+- Creates record in database collection "items" ONLY
+- Provide request body with the collection name and product/item name e.g. `{"collection":"items","data":{"name":"Brand-new newness"}}`
 
-### VPC Module
+## MongoDB data generation scripts
 
-TODO
+Use file **`database-mongo/make-fake-data.js`**
+- Notes contained therein for data generation and seeding
 
-### RDS Module
-
-TODO
-
-- Update the env/setup.js to connect to RDS Database
-
-### EC2 Module
-
-#### Create New Instance
-- Mostly standard	/ default selections except
-  - VPC and Subnets, as created in previous steps
-- Security Group, modify rules
-  - SSH - restricted to my IP
-  - TCP - Port=3030, Anywhere
-- Created Instance
-- Setup key-pair locally
-- Create Elastic IP
-  - Allocate New Address
-  - Actions > Associate Address
-
-#### Connect to AWS from Command Line
-- Run the following to prevent changes to PEM File
-```console
-chmod 400 ~/../linkToYourPEMFile.pem
-```
-
-- Connect to AWS (default user: ec2-user)
-```
-ssh -i <pem-file> ec2-user@<ec2-ip>
-```
-
-#### Deploy application to EC2
-- Run any updates required
-```
-sudo yum update
-```
-
-- Install node
-```
-curl --location https://rpm.nodesource.com/setup_6.x | sudo bash -
-sudo yum install -y nodejs
-```
-Check node was installed
-
-Exit connection to EC2
-```
-exit
-```
-
-- Delete the node-modules folder, so that the upload to ec2 server is faster
-
-- Run the following to push local files to EC2 from local console
-```
-scp -r -i ../../**.pem ../<folder-name> ec2-user@3.218.88.90:/home/ec2-user/<folder-name>
-```
-
-- Change folder to /<folder-name>
-
-- run `npm install`
-
-- Start the application
-```
-npm run start
-```
-
-- Open in browser
-<elastic-ip-address>:<port>
-
-
-### PM2 Module
-- to keep the server running
-
-```
-sudo npm i -g pm2
-```
-
+**After database is seeded:**
+- You will need to add an index to the **`item_id field`** of **`items_vendors`** collection. From the mongo shell, this looks like **`db.collection.createIndex(keys, options)`** as per mongo's documentation. Since this field is used for the service's main query, running queries without an index on the **`item_id`** field will result in very slow document retrieval.
 
 
 
