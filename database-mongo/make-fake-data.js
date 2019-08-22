@@ -43,7 +43,6 @@ let createAvailableItems = function () {
     'flags': 'a' // Allows for two 5Million record batches to be appended to same file
   });
 
-  // NOTE * You will need to uncomment one loop at a time and set the number of loops according to the number of records you want to generate.
   // If you try to run too many at once, you may run out of memory!
 
   for (let i = 0; i < 15000000; i++) {
