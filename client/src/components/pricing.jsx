@@ -41,12 +41,12 @@ class Pricing extends React.Component {
 
   componentDidMount() {
     console.log(this.props);
-    window.addEventListener('load', this.handleLoad);
+    //window.addEventListener('load', this.handleLoad);
     this.handleLoad();
   }
 
   componentWillUnmount() {
-    window.removeEventListener('load', this.handleLoad);
+    //window.removeEventListener('load', this.handleLoad);
   }
 
   handleLoad() {
@@ -76,6 +76,8 @@ class Pricing extends React.Component {
       });
     });
   }}
+
+  //
 
   render() {
     return (

@@ -6,7 +6,7 @@ mongoimport --db amazon --collection items --columnsHaveTypes --type tsv --field
 
 mongoimport --db amazon --collection vendors --columnsHaveTypes --type tsv --fields "_id.int32(),name.string(),amz_holds_stock.boolean(),free_returns.boolean(),ships_on_saturday.boolean(),ships_on_sunday.boolean(),ships_from_zipcode.string(),status.string()" --file 'database-mongo/fake-data/vendors.txt'
 
-mongoimport --db amazon --collection items_vendors --columnsHaveTypes --type tsv --fields "item_id.int32(),vendor_id.int32(),items_condition.string(),price.decimal(),quantity_available.int32(),amz_holds_stock.boolean(),free_returns.boolean(),ships_from_zipcode.string()" --file 'database-mongo/fake-data/items_vendors.txt'
+mongoimport --db amazon --collection items_vendors --columnsHaveTypes --type tsv --fields "item_id.int32(),vendor_id.int32(),items_condition.string(),price.string(),quantity_available.int32(),amz_holds_stock.boolean(),free_returns.boolean(),ships_from_zipcode.string()" --file 'database-mongo/fake-data/items_vendors.txt'
 
 */
 const faker = require('faker');
