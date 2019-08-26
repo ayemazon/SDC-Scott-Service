@@ -4,15 +4,6 @@ CREATE DATABASE amazonpricing;
 
 USE amazonpricing;
 
-CREATE TABLE user (
-  id INT NOT NULL AUTO_INCREMENT,
-  name VARCHAR(255) NOT NULL,
-  email VARCHAR(255) NOT NULL,
-  default_address_zip INT(5),
-  PRIMARY KEY (id)
-);
-
-
 
 CREATE TABLE item (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -26,20 +17,34 @@ CREATE TABLE vendor (
   free_returns BOOLEAN,
   ships_on_saturday BOOLEAN,
   ships_on_sunday BOOLEAN,
-  ships_from_zipcode  INT(5),
+  ships_from_zipcode  VARCHAR(10),
   status ENUM('Active', 'Pending Approval', 'Discontinued') NOT NULL
 );
 
-CREATE TABLE item_availability (
+CREATE TABLE items_vendors (
   id INT NOT NULL AUTO_INCREMENT  PRIMARY KEY,
   item_id INT NOT NULL,
   vendor_id INT NOT NULL,
-  items_condition VARCHAR(255),
+  items_condition VARCHAR(17),
   price DECIMAL NOT NULL,
-  quantity_available INT NOT NULL,
+  quantity_available SMALLINT NOT NULL,
   amz_holds_stock BOOLEAN,
 	free_returns BOOLEAN,
-  ship_from_zipcode	INT(5),
-  CONSTRAINT fk_item FOREIGN KEY fk_item(item_id) REFERENCES item(id),
-  CONSTRAINT fk_vendor FOREIGN KEY fk_vendor(vendor_id) REFERENCES vendor(id)
+  ships_from_zipcode	VARCHAR(10),
+  FOREIGN KEY (item_id) REFERENCES item(id),
+  FOREIGN KEY (vendor_id) REFERENCES vendor(id)
 );
+
+LOAD DATA LOCAL INFILE 'database-mysql/fake-data/items.txt'
+  INTO TABLE item
+  (name);
+
+LOAD DATA LOCAL INFILE 'database-mysql/fake-data/vendors.txt'
+  INTO TABLE vendor
+  (name, amz_holds_stock, free_returns, ships_on_saturday, ships_on_sunday, ships_from_zipcode, status);
+
+LOAD DATA LOCAL INFILE 'database-mysql/fake-data/items_vendors.txt'
+  INTO TABLE items_vendors
+  (item_id, vendor_id, items_condition, price, quantity_available, amz_holds_stock, free_returns, ships_from_zipcode);
+
+SHOW WARNINGS;

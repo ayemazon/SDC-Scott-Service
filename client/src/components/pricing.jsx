@@ -50,12 +50,12 @@ class Pricing extends React.Component {
   }
 
   handleLoad() {
-    var queryProductId = window.location.pathname.slice(10);
-    queryProductId = queryProductId.replace("/", "");
-    //queryProductId = queryProductId.replace(":", "");
+    var queryProductId = window.location.pathname.slice(1);
+    
     console.log('queryProductId ' + queryProductId);
-    $.ajax({
-      url: consts.server_host + 'product/:' + queryProductId,
+    if (queryProductId !== '') {
+      $.ajax({
+      url: consts.server_host + 'product/' + queryProductId,
       type: 'GET',
       success: (serverData) => {
         console.log('serverData ' + typeof serverData + ', ' + serverData);
@@ -66,17 +66,16 @@ class Pricing extends React.Component {
         return {};
       },
     }).then((dataReturned) => {
-      var dataParsed = JSON.parse(dataReturned);
-      var recId = dataParsed.id || queryProductId;
+      var recId = dataReturned.id || queryProductId;
       this.setState({
-        productDetails: dataParsed,
+        productDetails: dataReturned,
         productId: recId,
       });
       this.setState({
         changed: this.state.changed ? false : true,
       });
     });
-  }
+  }}
 
   render() {
     return (
@@ -102,7 +101,7 @@ class Pricing extends React.Component {
           </DeliveryText>
 
           <AvailabilityStatement
-            availQuantity={this.state.productDetails.available_quantity}
+            availQuantity={this.state.productDetails.quantity_available}
           />
 
           <SoldFulfilledText>
