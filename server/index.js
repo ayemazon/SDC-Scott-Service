@@ -22,7 +22,7 @@ app.use(express.static(clientDistFolder));
 app.use('/static', express.static(publicFolder));
 app.use('/:id', express.static(clientDistFolder));
 
-app.get('/product/:id', (req, res) => {
+app.get('/product/pricing/:id', (req, res) => {
   var requestedId = req.params.id;
 
   db.getProductDataById(requestedId, (err, results) => {
