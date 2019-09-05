@@ -35,7 +35,7 @@ app.get('/product/pricing/:id', (req, res) => {
   });
 });
 
-app.post('/', (req, res) => {
+app.post('/product', (req, res) => {
   let table = req.body.table;
   let data = req.body.data;
   db.createRecord(table, data, (err, results) => {
