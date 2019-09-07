@@ -28,4 +28,6 @@ env/ham-keys.pem
 # Fake data files
 database-mysql/fake-data
 
+newrelic.js
+
 
