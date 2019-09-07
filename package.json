@@ -37,6 +37,7 @@
     "babel-preset-react": "^6.24.1",
     "faker": "^4.1.0",
     "fs": "0.0.1-security",
+    "morgan": "^1.9.1",
     "nodemon": "^1.19.1",
     "webpack": "^4.20.2",
     "webpack-cli": "^3.3.4"

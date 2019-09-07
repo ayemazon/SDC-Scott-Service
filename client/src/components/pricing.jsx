@@ -55,7 +55,7 @@ class Pricing extends React.Component {
     console.log('queryProductId ' + queryProductId);
     if (queryProductId !== '') {
       $.ajax({
-      url: consts.server_host + 'product/pricing/' + queryProductId,
+      url: '/product/pricing/' + queryProductId,
       type: 'GET',
       success: (serverData) => {
         console.log('serverData ' + typeof serverData + ', ' + serverData);

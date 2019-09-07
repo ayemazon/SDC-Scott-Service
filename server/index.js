@@ -3,10 +3,12 @@ const bodyParser = require('body-parser');
 const path = require("path");
 const cors = require("cors");
 const db = require('../database-mysql');
+const morgan = require('morgan');
 
 const app = express();
 const PORT = 3030;
 
+// app.use(morgan('dev'));
 app.use(cors());
 app.use(bodyParser.urlencoded({
   extended: true
