@@ -1,5 +1,6 @@
 module.exports = {
-  setJSONBody: setJSONBody
+  setJSONBody: setJSONBody,
+  getRandomId: getRandomId
 }
 
 const faker = require('faker');
@@ -12,4 +13,9 @@ function setJSONBody(requestParams, context, ee, next) {
     }
   };
   next();
+}
+
+function getRandomId(context, events, done) {
+  context.vars['id'] = Math.ceil(Math.random() * 10000000);
+  return done();
 }

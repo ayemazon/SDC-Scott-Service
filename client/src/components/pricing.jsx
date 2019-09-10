@@ -42,11 +42,18 @@ class Pricing extends React.Component {
   componentDidMount() {
     console.log(this.props);
     window.addEventListener('load', this.handleLoad);
-    this.handleLoad();
   }
 
   componentWillUnmount() {
     window.removeEventListener('load', this.handleLoad);
+  }
+
+  decoratePricingData(data) {
+    data.gift_wrap_available = true;
+    data.user_zip = '78726';
+    data.sold_by = data.name;
+    data.fulfilled_by = ((data.amz_holds_stock == true) ? "Amazon" : data.name);
+    data.ships_on_sunday != 1 && data.ships_on_sunday != 1 ? data.expected_shipping = '4-5 Days' : 'One Day';
   }
 
   handleLoad() {
@@ -59,6 +66,8 @@ class Pricing extends React.Component {
       type: 'GET',
       success: (serverData) => {
         console.log('serverData ' + typeof serverData + ', ' + serverData);
+        this.decoratePricingData(serverData);
+        console.log(JSON.stringify(serverData))
         return serverData;
       },
       error: (err) => {

@@ -54,32 +54,16 @@ const getProductDataById = function (id, cb) {
   vendor.id, vendor.name, vendor.free_returns, vendor.ships_on_saturday, vendor.ships_on_sunday, vendor.ships_from_zipcode
   FROM items_vendors AS itemAvail 
   INNER JOIN vendor
-  WHERE itemAvail.item_id = ${id} AND vendor.id = itemAvail.vendor_id`;
+  WHERE itemAvail.item_id = ${id} AND vendor.id = itemAvail.vendor_id LIMIT 1`;
 
   pool.query(queryString, (err, dbRes) => {
     if (err) {
       console.log('MYSQL select by item_id error ' + err);
       cb(err, null);
-    } else if (dbRes.length) {
-      dbRes = dbRes[0];
-      dbRes.gift_wrap_available = true;
-      dbRes.user_zip = "78726";
-
-
-      dbRes.sold_by = dbRes.name;
-      dbRes.fulfilled_by = ((dbRes.amz_holds_stock == true) ? "Amazon" : dbRes.name);
-      if (dbRes.ships_on_sunday == 1 && dbRes.ships_on_saturday == 1) {
-        dbRes.expected_shipping = "One Day";
-      }
-      if (dbRes.ships_on_sunday == 1 || dbRes.ships_on_saturday == 1) {
-        dbRes.expected_shipping = "Two Days";
-      }
-      if (dbRes.ships_on_sunday != 1 && dbRes.ships_on_saturday != 1) {
-        dbRes.expected_shipping = "4-5 Days";
-      }
-      dbRes.free_delivery = ((dbRes.free_returns == 1) ? true : false);
+    } else {
+      dbRes = dbRes.length === 1 ? dbRes[0] : {};
+      cb(null, dbRes);
     }
-    cb(null, dbRes);
 
   });
 };
