@@ -48,7 +48,7 @@ if (cluster.isMaster) {
     db.getProductDataById(req.params.id, (err, results) => {
       if (err) {
         console.log('GET error');
-        res.status(400).send(err);
+        res.status(400).json(err);
       } else {
         res.set({'Cache-Control': 'max-age=30000'}).status(200).json(results);
       }

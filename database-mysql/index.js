@@ -1,18 +1,20 @@
 const mysql = require('mysql');
 const mysqlConfig = require('./config.js');
 
-const connection = mysql.createConnection(mysqlConfig);
+const pool = mysql.createPool(mysqlConfig);
 
-connection.connect((err) => {
+let connection = pool.getConnection((err, connection) => {
   if (err) {
     console.log('error connecting to database ' + err);
+    throw err;
   }
+  return connection;
 });
 
 //------------ CRUD ----------//
 const createRecord = function (tableName, data, cb) {
   var queryString = `INSERT INTO ${tableName} SET ?`;
-  connection.query(queryString, [data], (err, dbRes) => {
+  pool.query(queryString, [data], (err, dbRes) => {
     if (err) {
       cb(err, null);
     } else {
@@ -54,7 +56,7 @@ const getProductDataById = function (id, cb) {
   INNER JOIN vendor
   WHERE itemAvail.item_id = ${id} AND vendor.id = itemAvail.vendor_id`;
 
-  connection.query(queryString, (err, dbRes) => {
+  pool.query(queryString, (err, dbRes) => {
     if (err) {
       console.log('MYSQL select by item_id error ' + err);
       cb(err, null);
