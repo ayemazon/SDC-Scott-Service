@@ -1,4 +1,4 @@
-require('newrelic');
+// require('newrelic');
 const cluster = require('cluster');
 
 
