@@ -1,5 +1,7 @@
 require('newrelic');
 const cluster = require('cluster');
+const NodeCache = require('node-cache');
+const myCache = new NodeCache({stdTTL: 300});
 
 
 if (cluster.isMaster) {
@@ -45,17 +47,31 @@ if (cluster.isMaster) {
 
   
   app.get('/product/pricing/:id', (req, res) => {  
-    db.getProductDataById(req.params.id, (err, results) => {
+    // Server Cache
+    myCache.get(req.params.id, (err, value) => {
       if (err) {
-        console.log('GET error');
-        res.status(400).json(err);
+        console.log(err);
+        throw err;
       } else {
-        res.set({'Cache-Control': 'max-age=30000'}).status(200).json(results);
+        if (value == undefined) { // Fetch from db
+          db.getProductDataById(req.params.id, (err, results) => {
+            if (err) {
+              console.log('GET error');
+              res.status(400).json(err);
+            } else {
+              myCache.set(req.params.id, results, (err, success) => { // Store value in cache
+                res.set({'Cache-Control': 'max-age=30000'}).status(200).json(results);
+              })
+            }
+          });
+        } else {
+          res.set({'Cache-Control': 'max-age=30000'}).status(200).json(value);
+        }
       }
-    });
+    })
   });
   
-  app.post('/', (req, res) => {
+  app.post('/product', (req, res) => {
     db.createRecord(req.body.table, req.body.data, (err, results) => {
       if (err) {
         console.log('POST error');
