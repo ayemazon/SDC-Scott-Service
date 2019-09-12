@@ -3,13 +3,13 @@ config:
   phases:
     - duration: 60
       arrivalRate: 1
-      name: "1 request/sec"
-    - duration: 60
-      arrivalRate: 10
       name: "10 request/sec"
     - duration: 60
-      arrivalRate: 100
+      arrivalRate: 10
       name: "100 request/sec"
+    - duration: 60
+      arrivalRate: 100
+      name: "1000 request/sec"
   processor: "./artillery-scripts.js"
   http:
     # Responses have to be sent within 10 seconds or the request will be aborted
