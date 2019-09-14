@@ -1,7 +1,7 @@
 require('newrelic');
 const cluster = require('cluster');
 const NodeCache = require('node-cache');
-const myCache = new NodeCache({stdTTL: 300});
+const myCache = new NodeCache({stdTTL: 3000});
 
 
 if (cluster.isMaster) {
@@ -25,7 +25,6 @@ if (cluster.isMaster) {
   const app = express();
   const PORT = 3030;
 
-  // app.use(morgan('dev'));
   app.use(cors());
   app.use(bodyParser.json());
   
@@ -82,29 +81,29 @@ if (cluster.isMaster) {
     });
   });
   
-  app.put('/', (req, res) => {
-    db.updateRecord(req.body.table, req.body.data, req.body.id, (err, results) => {
-      if (err) {
-        console.log('PUT error');
-        res.status(400).send(err);
-      } else {
-        res.status(200).json(results)
-      }
-    });
-  });
+  // app.put('/', (req, res) => {
+  //   db.updateRecord(req.body.table, req.body.data, req.body.id, (err, results) => {
+  //     if (err) {
+  //       console.log('PUT error');
+  //       res.status(400).send(err);
+  //     } else {
+  //       res.status(200).json(results)
+  //     }
+  //   });
+  // });
   
-  app.delete('/', (req, res) => {
-    let id = req.body.id;
-    let table = req.body.table;
-    db.deleteRecord(req.body.table, req.body.id, (err, results) => {
-      if (err) {
-        console.log('PUT error');
-        res.status(400).send(err);
-      } else {
-        res.status(200).json(results)
-      }
-    });
-  });
+  // app.delete('/', (req, res) => {
+  //   let id = req.body.id;
+  //   let table = req.body.table;
+  //   db.deleteRecord(req.body.table, req.body.id, (err, results) => {
+  //     if (err) {
+  //       console.log('PUT error');
+  //       res.status(400).send(err);
+  //     } else {
+  //       res.status(200).json(results)
+  //     }
+  //   });
+  // });
   
   app.listen(PORT, () => {
     console.log(`visit http://localhost:${PORT}`);

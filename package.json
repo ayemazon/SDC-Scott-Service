@@ -9,39 +9,19 @@
     "node": ">=6.13.0"
   },
   "scripts": {
-    "react-prod": "webpack -p",
-    "react-dev": "webpack -d --watch",
-    "server": "nodemon server/index.js"
+    "server": "forever server/index.js"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
-    "css-loader": "^3.0.0",
     "express": "^4.17.1",
+    "forever": "^1.0.0",
     "fs": "0.0.1-security",
     "jquery": "^3.4.1",
     "mysql": "^2.17.1",
     "node-cache": "^4.2.1",
     "path": "^0.12.7",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "style-loader": "^0.23.1",
-    "styled-components": "^4.3.2",
-    "underscore": "^1.9.1"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.4.4",
-    "@babel/preset-env": "^7.4.4",
-    "@babel/preset-react": "^7.0.0",
-    "babel-loader": "^8.0.5",
-    "babel-preset-es2016": "^6.24.1",
-    "babel-preset-react": "^6.24.1",
-    "faker": "^4.1.0",
-    "fs": "0.0.1-security",
-    "morgan": "^1.9.1",
-    "newrelic": "^5.11.0",
-    "nodemon": "^1.19.1",
-    "webpack": "^4.20.2",
-    "webpack-cli": "^3.3.4"
+    "underscore": "^1.9.1",
+    "newrelic": "^5.11.0"
   }
 }

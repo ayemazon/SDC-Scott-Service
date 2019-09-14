@@ -1,9 +1,8 @@
-const setup = require('../env/setup.js');
 
 module.exports = {
   connectionLimit: 30,
-  host: setup.host,
-  user: setup.user,
-  password: setup.password,
-  database: setup.database
+  host: process.env.db_host,
+  user: process.env.db_user,
+  password: process.env.db_password,
+  database: process.env.database
 };
