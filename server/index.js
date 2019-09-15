@@ -29,16 +29,9 @@ if (cluster.isMaster) {
   const clientDistFolder = path.join(__dirname, '/../client/dist');
   const publicFolder = path.join(__dirname, '/..', '/public');
     
-  app.use(express.static(publicFolder));
-  app.use(express.static(clientDistFolder, {maxAge: '30000', setHeaders: function (res) {
-    res.set('Content-Encoding', 'gzip');
-    res.set('Content-Type', 'application/x-gzip')
-  }}));
+  app.use(express.static(publicFolder, {maxAge: '30000'}));
   app.use('/:id', express.static(publicFolder, {maxAge: '30000'}));
-  app.use('/:id', express.static(clientDistFolder, {maxAge: '30000', setHeaders: function (res) {
-    res.set('Content-Encoding', 'gzip');
-    res.set('Content-Type', 'application/x-gzip')
-  }}));
+  
 
   app.use('/static', express.static(publicFolder, {maxAge: '30000'}));
 
