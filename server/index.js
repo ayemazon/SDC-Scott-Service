@@ -20,8 +20,6 @@ if (cluster.isMaster) {
   const path = require("path");
   const cors = require("cors");
   const db = require('../database-mysql');
-  const morgan = require('morgan');
-
   const app = express();
   const PORT = 3030;
 
