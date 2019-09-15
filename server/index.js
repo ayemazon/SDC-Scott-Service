@@ -21,7 +21,7 @@ if (cluster.isMaster) {
   const cors = require("cors");
   const db = require('../database-mysql');
   const app = express();
-  const PORT = 3030;
+  const PORT = 8000;
 
   app.use(cors());
   app.use(bodyParser.json());
@@ -104,7 +104,7 @@ if (cluster.isMaster) {
   // });
   
   app.listen(PORT, () => {
-    console.log(`visit http://localhost:${PORT}`);
+    console.log(`visit http://ec2-18-191-179-191.us-east-2.compute.amazonaws.com:${PORT}`);
   });
   
 }
