@@ -1,20 +1,8 @@
 require('newrelic');
-const cluster = require('cluster');
 const NodeCache = require('node-cache');
 const myCache = new NodeCache({stdTTL: 3000});
 
 
-if (cluster.isMaster) {
-  var cpuCount = require('os').cpus().length;
-
-  for (let i = 0; i < cpuCount; i++) {
-    cluster.fork();
-  }
-  cluster.on('exit', function (worker) {
-    console.log('Worker %d died :(', worker.id);
-    cluster.fork();
-  })
-} else {
   const express = require('express');
   const bodyParser = require('body-parser');
   const path = require("path");
@@ -99,5 +87,4 @@ if (cluster.isMaster) {
   app.listen(PORT, () => {
     console.log(`visit http://ec2-18-191-179-191.us-east-2.compute.amazonaws.com:${PORT}`);
   });
-  
-}
+
