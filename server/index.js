@@ -18,47 +18,47 @@ const myCache = new NodeCache({stdTTL: 3000});
   const publicFolder = path.join(__dirname, '/..', '/public');
     
   app.use(express.static(publicFolder, {maxAge: '30000'}));
-  app.use('/:id', express.static(publicFolder, {maxAge: '30000'}));
+  // app.use('/:id', express.static(publicFolder, {maxAge: '30000'}));
   
 
-  app.use('/static', express.static(publicFolder, {maxAge: '30000'}));
+  // app.use('/static', express.static(publicFolder, {maxAge: '30000'}));
 
   
-  app.get('/product/pricing/:id', (req, res) => {  
-    // Server Cache
-    myCache.get(req.params.id, (err, value) => {
-      if (err) {
-        console.log(err);
-        throw err;
-      } else {
-        if (value == undefined) { // Fetch from db
-          db.getProductDataById(req.params.id, (err, results) => {
-            if (err) {
-              console.log('GET error');
-              res.status(400).json(err);
-            } else {
-              myCache.set(req.params.id, results, (err, success) => { // Store value in cache
-                res.set({'Cache-Control': 'max-age=30000'}).status(200).json(results);
-              })
-            }
-          });
-        } else {
-          res.set({'Cache-Control': 'max-age=30000'}).status(200).json(value);
-        }
-      }
-    })
-  });
+  // app.get('/product/pricing/:id', (req, res) => {  
+  //   // Server Cache
+  //   myCache.get(req.params.id, (err, value) => {
+  //     if (err) {
+  //       console.log(err);
+  //       throw err;
+  //     } else {
+  //       if (value == undefined) { // Fetch from db
+  //         db.getProductDataById(req.params.id, (err, results) => {
+  //           if (err) {
+  //             console.log('GET error');
+  //             res.status(400).json(err);
+  //           } else {
+  //             myCache.set(req.params.id, results, (err, success) => { // Store value in cache
+  //               res.set({'Cache-Control': 'max-age=30000'}).status(200).json(results);
+  //             })
+  //           }
+  //         });
+  //       } else {
+  //         res.set({'Cache-Control': 'max-age=30000'}).status(200).json(value);
+  //       }
+  //     }
+  //   })
+  // });
   
-  app.post('/product', (req, res) => {
-    db.createRecord(req.body.table, req.body.data, (err, results) => {
-      if (err) {
-        console.log('POST error');
-        res.status(400).send(err);
-      } else {
-        res.status(200).json(results)
-      }
-    });
-  });
+  // app.post('/product', (req, res) => {
+  //   db.createRecord(req.body.table, req.body.data, (err, results) => {
+  //     if (err) {
+  //       console.log('POST error');
+  //       res.status(400).send(err);
+  //     } else {
+  //       res.status(200).json(results)
+  //     }
+  //   });
+  // });
 
   // * Special verification get route for loader.io  * //
 
