@@ -59,6 +59,20 @@ const myCache = new NodeCache({stdTTL: 3000});
       }
     });
   });
+
+  // * Special verification get route for loader.io  * //
+
+  app.get('/loaderio-8cf1c24260c897494f0386efd121a377', (req, res) => {
+    let filename = 'loaderio-8cf1c24260c897494f0386efd121a377.txt';
+    res.sendFile(filename, {root: '/home/ec2-user'}, (err) => {
+      if (err) {
+        console.log('cannot find file with given path');
+        next(err);
+      }
+    })
+  })
+
+  //* ---------------------------------------------- *//
   
   // app.put('/', (req, res) => {
   //   db.updateRecord(req.body.table, req.body.data, req.body.id, (err, results) => {
