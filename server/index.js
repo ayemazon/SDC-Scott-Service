@@ -64,7 +64,7 @@ const myCache = new NodeCache({stdTTL: 3000});
 
   app.get('/loaderio-8cf1c24260c897494f0386efd121a377', (req, res) => {
     let filename = 'loaderio-8cf1c24260c897494f0386efd121a377.txt';
-    res.sendFile(filename, {root: '/home/ec2-user'}, (err) => {
+    res.sendFile(filename, {root: '~/'}, (err) => {
       if (err) {
         console.log('cannot find file with given path');
         next(err);
