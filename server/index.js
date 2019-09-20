@@ -26,27 +26,16 @@ const myCache = new NodeCache({stdTTL: 3000});
   
   app.get('/product/pricing/:id', (req, res) => {  
     // Server Cache
-    myCache.get(req.params.id, (err, value) => {
+    db.getProductDataById(req.params.id, (err, results) => {
       if (err) {
-        console.log(err);
-        throw err;
+        console.log('GET error');
+        res.status(400).json(err);
       } else {
-        if (value == undefined) { // Fetch from db
-          db.getProductDataById(req.params.id, (err, results) => {
-            if (err) {
-              console.log('GET error');
-              res.status(400).json(err);
-            } else {
-              myCache.set(req.params.id, results, (err, success) => { // Store value in cache
-                res.set({'Cache-Control': 'max-age=30000'}).status(200).json(results);
-              })
-            }
-          });
-        } else {
-          res.set({'Cache-Control': 'max-age=30000'}).status(200).json(value);
-        }
+        myCache.set(req.params.id, results, (err, success) => { // Store value in cache
+          res.set({'Cache-Control': 'max-age=30000'}).status(200).json(results);
+        })
       }
-    })
+    });
   });
   
   app.post('/product', (req, res) => {
